@@ -39,6 +39,26 @@ public class UserInterface {
     }
 
     public void processGetByPriceRequest(){
+        String input;
+        double min = -1;
+        double max = -1;
+
+        while(true){
+            if(min == -1){
+                System.out.println("Enter The Minimum Price");
+                input = scanner.nextLine();
+                if(min < 0){
+                    min = Double.parseDouble(input);
+                }
+            }else if(max <= 0){
+                System.out.println("Enter The Maximum Price");
+                input = scanner.nextLine();
+                max = Double.parseDouble(input);
+                break;
+            }
+        }
+
+        displayVehicles(dealership.getVehiclesByPrice(min,max));
 
     }
 
@@ -82,7 +102,7 @@ public class UserInterface {
         System.out.println("temp menu");
     }
 
-    private void displayVehicles(ArrayList<Vehicle> vehicles){
+    private void displayVehicles(List<Vehicle> vehicles){
         for(Vehicle vehicle : vehicles){
             System.out.println(vehicle);
         }

@@ -7,7 +7,7 @@ public class Dealership {
     private String name;
     private String address;
     private String phone;
-    private ArrayList<Vehicle> inventory;
+    private List<Vehicle> inventory;
 
     public Dealership(String name, String address, String phone) {
         this.name = name;
@@ -17,7 +17,14 @@ public class Dealership {
     }
 
     public List<Vehicle> getVehiclesByPrice(double min, double max){
-        return null;
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        for(Vehicle vehicle : inventory){
+            if(vehicle.getPrice() <= max && vehicle.getPrice() >= min){
+                vehicles.add(vehicle);
+            }
+        }
+        return vehicles;
     }
 
     public List<Vehicle> getVehiclesByMakeModel(String make, String model){
@@ -40,7 +47,7 @@ public class Dealership {
         return null;
     }
 
-    public ArrayList<Vehicle> getAllVehicles(){
+    public List<Vehicle> getAllVehicles(){
         return inventory;
     }
 
@@ -49,6 +56,6 @@ public class Dealership {
     }
 
     public void removeVehicle(Vehicle vehicle){
-
+        inventory.remove(inventory.indexOf(vehicle));
     }
 }

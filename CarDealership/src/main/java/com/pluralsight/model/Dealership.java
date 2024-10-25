@@ -40,12 +40,12 @@ public class Dealership {
         return null;
     }
 
-    public List<Vehicle> getAllVehicles(){
-        return null;
+    public ArrayList<Vehicle> getAllVehicles(){
+        return inventory;
     }
 
     public void addVehicle(Vehicle vehicle){
-
+        inventory.add(vehicle);
     }
 
     public void removeVehicle(Vehicle vehicle){

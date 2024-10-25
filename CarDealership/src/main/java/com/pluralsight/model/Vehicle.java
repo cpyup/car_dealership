@@ -20,4 +20,18 @@ public class Vehicle {
         this.odometer = odometer;
         this.price = price;
     }
+
+    @Override
+    public String toString(){
+        StringBuilder output = new StringBuilder();
+        output.append("Vin: "+vin+"\n");
+        output.append("Year: "+year+"\n");
+        output.append("Make: "+make+"\n");
+        output.append("Model: "+model+"\n");
+        output.append("Type: "+vehicleType+"\n");
+        output.append("Color: "+color+"\n");
+        output.append("Odometer: "+odometer+"\n");
+        output.append("Price: "+price+"\n");
+        return output.toString();
+    }
 }

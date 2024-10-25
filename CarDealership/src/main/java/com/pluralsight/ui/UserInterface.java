@@ -2,6 +2,7 @@ package com.pluralsight.ui;
 
 import com.pluralsight.model.Dealership;
 import com.pluralsight.model.Vehicle;
+import com.pluralsight.persistence.DealershipFileManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ public class UserInterface {
 
     public void display(){
         init();
-        String input = "";
+        String input;
 
         while(true){
             outputMenu();
@@ -32,9 +33,7 @@ public class UserInterface {
                 case "99" -> {
                     return;
                 }
-                default -> {
-                    System.out.println("Invalid Option");
-                }
+                default -> System.out.println("Invalid Option");
             }
         }
     }
@@ -75,14 +74,15 @@ public class UserInterface {
     }
 
     private void init(){
-
+        DealershipFileManager manager = new DealershipFileManager();
+        dealership = manager.getDealership();
     }
 
     private void outputMenu(){
         System.out.println("temp menu");
     }
 
-    private void displayVehicles(List<Vehicle> vehicles){
+    private void displayVehicles(ArrayList<Vehicle> vehicles){
         for(Vehicle vehicle : vehicles){
             System.out.println(vehicle);
         }

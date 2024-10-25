@@ -15,9 +15,9 @@ public class DealershipFileManager {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] values = line.split("\\|");
-                if(dealership == null && values.length == 3){
+                if(dealership == null && values.length == 3){  // Dealer info
                     dealership = new Dealership(values[0].trim(),values[1].trim(),values[2].trim());
-                }else if(values.length == 8 && dealership != null){
+                }else if(values.length == 8 && dealership != null){  // Inventory info
                     int vin = Integer.parseInt(values[0]);
                     int year = Integer.parseInt(values[1]);
                     String make = values[2].trim();

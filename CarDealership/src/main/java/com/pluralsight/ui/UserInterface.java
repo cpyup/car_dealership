@@ -4,7 +4,6 @@ import com.pluralsight.model.Dealership;
 import com.pluralsight.model.Vehicle;
 import com.pluralsight.persistence.DealershipFileManager;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -38,29 +37,41 @@ public class UserInterface {
         }
     }
 
-    public void processGetByPriceRequest(){
+    public void processGetByPriceRequest() {
         String input;
         double min = -1;
         double max = -1;
 
-        while(true){
-            if(min == -1){
-                System.out.println("Enter The Minimum Price");
-                input = scanner.nextLine();
-                if(min < 0){
-                    min = Double.parseDouble(input);
+        while (min < 0) {
+            System.out.print("Enter The Minimum Price: ");
+            input = scanner.nextLine();
+            try {
+                min = Double.parseDouble(input);
+                if (min < 0) {
+                    System.out.println("Minimum price must be non-negative. Please try again.");
                 }
-            }else if(max <= 0){
-                System.out.println("Enter The Maximum Price");
-                input = scanner.nextLine();
-                max = Double.parseDouble(input);
-                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
             }
         }
 
-        displayVehicles(dealership.getVehiclesByPrice(min,max));
+        while (max <= 0) {
+            System.out.print("Enter The Maximum Price: ");
+            input = scanner.nextLine();
+            try {
+                max = Double.parseDouble(input);
+                if (max <= 0 || max < min) {
+                    System.out.println("Maximum price must be greater than the minimum price. Please try again.");
+                    max = -1;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
 
+        displayVehicles(dealership.getVehiclesByPrice(min, max));
     }
+
 
     public void processGetByMakeModelRequest(){
 

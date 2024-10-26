@@ -110,7 +110,17 @@ public class UserInterface {
     }
 
     private void outputMenu(){
-        System.out.println("temp menu");
+        System.out.println("Dealership Menu Options:");
+        System.out.println("\t1 - Search By Price");
+        System.out.println("\t2 - Search By Make/Model");
+        System.out.println("\t3 - Search By Year");
+        System.out.println("\t4 - Search By Color");
+        System.out.println("\t5 - Search By Mileage");
+        System.out.println("\t6 - Search By Type");
+        System.out.println("\t7 - List All Vehicles");
+        System.out.println("\t8 - Add A Vehicle");
+        System.out.println("\t9 - Remove A Vehicle");
+        System.out.println("\t99 - Quit");
     }
 
     private void displayVehicles(List<Vehicle> vehicles){

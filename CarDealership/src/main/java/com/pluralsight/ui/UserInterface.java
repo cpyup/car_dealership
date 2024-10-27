@@ -112,7 +112,19 @@ public class UserInterface {
     }
 
     public void processGetByColorRequest(){
+        String input = "";
 
+        while (input.isBlank()) {
+            System.out.print("Enter The Desired Color: ");
+
+            try {
+                input = scanner.nextLine().trim();
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a valid color.");
+            }
+        }
+
+        displayVehicles(dealership.getVehiclesByColor(input));
     }
 
     public void processGetByMileageRequest(){

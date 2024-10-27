@@ -87,6 +87,11 @@ public class Dealership {
         return inventory;
     }
 
+    public List<Vehicle> getVehiclesByVin(int vin){
+        return inventory.stream().
+                filter(vehicle -> vehicle.getVin()==vin).toList();
+    }
+
     public void addVehicle(Vehicle vehicle){
         inventory.add(vehicle);
     }

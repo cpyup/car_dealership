@@ -101,7 +101,14 @@ public class UserInterface {
     }
 
     public void processRemoveVehicleRequest(){
-
+        Integer vin = getIntegerInput(0,null,"Vin To Remove",false);
+        if(vin != null){
+            List<Vehicle> vehicles = dealership.getVehiclesByVin(vin);
+            //TODO: Confirm removal
+            displayVehicles(vehicles);
+            vehicles.forEach(vehicle -> dealership.removeVehicle(vehicle));
+            initiateSave();
+        }
     }
 
     private void init(){
@@ -191,4 +198,6 @@ public class UserInterface {
         }
         return targetDouble;
     }
+
+
 }

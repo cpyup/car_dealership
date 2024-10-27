@@ -72,10 +72,10 @@ public class UserInterface {
         displayVehicles(dealership.getVehiclesByPrice(min, max));
     }
 
-
     public void processGetByMakeModelRequest(){
 
     }
+
     public void processGetByYearRequest(){
         String input;
         int min = 1900;
@@ -116,7 +116,38 @@ public class UserInterface {
     }
 
     public void processGetByMileageRequest(){
+        String input;
+        int min = -1;
+        int max = -1;
 
+        while (min < 0) {
+            System.out.print("Enter The Minimum Mileage: ");
+            input = scanner.nextLine();
+            try {
+                min = Integer.parseInt(input);
+                if (min < 0) {
+                    System.out.println("Minimum mileage must be non-negative. Please try again.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
+
+        while (max <= 0) {
+            System.out.print("Enter The Maximum Mileage: ");
+            input = scanner.nextLine();
+            try {
+                max = Integer.parseInt(input);
+                if (max < 0 || max < min) {
+                    System.out.println("Maximum mileage must be greater than the minimum price. Please try again.");
+                    max = -1;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
+
+        displayVehicles(dealership.getVehiclesByMileage(min, max));
     }
 
     public void processGetByVehicleTypeRequest(){

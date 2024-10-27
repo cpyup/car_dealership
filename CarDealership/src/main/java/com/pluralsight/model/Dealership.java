@@ -42,7 +42,7 @@ public class Dealership {
         List<Vehicle> vehicles = new ArrayList<>();
 
         for(Vehicle vehicle : inventory){
-            if(vehicle.getPrice() <= max && vehicle.getPrice() >= min){
+            if(vehicle.getYear() <= max && vehicle.getYear() >= min){
                 vehicles.add(vehicle);
             }
         }
@@ -64,7 +64,7 @@ public class Dealership {
         List<Vehicle> vehicles = new ArrayList<>();
 
         for(Vehicle vehicle : inventory){
-            if(vehicle.getPrice() <= max && vehicle.getPrice() >= min){
+            if(vehicle.getOdometer() <= max && vehicle.getOdometer() >= min){
                 vehicles.add(vehicle);
             }
         }

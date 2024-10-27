@@ -5,6 +5,7 @@ import com.pluralsight.model.Vehicle;
 import com.pluralsight.persistence.DealershipFileManager;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -73,7 +74,30 @@ public class UserInterface {
     }
 
     public void processGetByMakeModelRequest(){
+        String input;
+        String make = "";
+        String model = null;
 
+        while (make.isBlank()) {
+            System.out.print("Enter The Desired Make: ");
+
+            try {
+                make = scanner.nextLine().trim();
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a valid make.");
+            }
+        }
+
+        System.out.print("Enter The Desired Model (or press enter to leave blank):");
+
+        try{
+            input = scanner.nextLine();
+            model = input;
+        }catch (NoSuchElementException e){
+            displayVehicles(dealership.getVehiclesByMakeModel(make,null));
+        }
+
+        displayVehicles(dealership.getVehiclesByMakeModel(make,model));
     }
 
     public void processGetByYearRequest(){

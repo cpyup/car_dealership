@@ -4,8 +4,8 @@ import com.pluralsight.model.Dealership;
 import com.pluralsight.model.Vehicle;
 import com.pluralsight.persistence.DealershipFileManager;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -39,167 +39,38 @@ public class UserInterface {
     }
 
     public void processGetByPriceRequest() {
-        String input;
-        double min = -1;
-        double max = -1;
-
-        while (min < 0) {
-            System.out.print("Enter The Minimum Price: ");
-            input = scanner.nextLine();
-            try {
-                min = Double.parseDouble(input);
-                if (min < 0) {
-                    System.out.println("Minimum price must be non-negative. Please try again.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid number.");
-            }
-        }
-
-        while (max <= 0) {
-            System.out.print("Enter The Maximum Price: ");
-            input = scanner.nextLine();
-            try {
-                max = Double.parseDouble(input);
-                if (max <= 0 || max < min) {
-                    System.out.println("Maximum price must be greater than the minimum price. Please try again.");
-                    max = -1;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid number.");
-            }
-        }
-
+        Double min = getDoubleInput(0.0,"Minimum Price",true);
+        Double max = getDoubleInput((min != null ? min : 0.0),"Maximum Price",true);
         displayVehicles(dealership.getVehiclesByPrice(min, max));
     }
 
     public void processGetByMakeModelRequest(){
-        String input;
-        String make = "";
-        String model = null;
-
-        while (make.isBlank()) {
-            System.out.print("Enter The Desired Make: ");
-
-            try {
-                make = scanner.nextLine().trim();
-            } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a valid make.");
-            }
-        }
-
-        System.out.print("Enter The Desired Model (or press enter to leave blank):");
-
-        try{
-            input = scanner.nextLine();
-            model = input;
-        }catch (NoSuchElementException e){
-            displayVehicles(dealership.getVehiclesByMakeModel(make,null));
-        }
+        String make = getStringInput("Make",false);
+        String model = getStringInput("Model",true);
 
         displayVehicles(dealership.getVehiclesByMakeModel(make,model));
     }
 
     public void processGetByYearRequest(){
-        String input;
-        int min = 1900;
-        int max = 0;
-
-        while (min <= 1900) {
-            System.out.print("Enter The Minimum Year: ");
-            input = scanner.nextLine();
-            try {
-                min = Integer.parseInt(input);
-                if (min < 0) {
-                    System.out.println("Minimum price must be non-negative. Please try again.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid number.");
-            }
-        }
-
-        while (max <= 0) {
-            System.out.print("Enter The Maximum Year: ");
-            input = scanner.nextLine();
-            try {
-                max = Integer.parseInt(input);
-                if (max <= 0 || max < min) {
-                    System.out.println("Maximum price must be greater than the minimum price. Please try again.");
-                    max = 0;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid number.");
-            }
-        }
+        Integer min = getIntegerInput(1900, getMaxYear(),"Minimum Year",true);
+        Integer max = getIntegerInput(min,getMaxYear(),"Maximum Year",true);
 
         displayVehicles(dealership.getVehiclesByYear(min, max));
     }
 
     public void processGetByColorRequest(){
-        String input = "";
-
-        while (input.isBlank()) {
-            System.out.print("Enter The Desired Color: ");
-
-            try {
-                input = scanner.nextLine().trim();
-            } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a valid color.");
-            }
-        }
-
-        displayVehicles(dealership.getVehiclesByColor(input));
+        displayVehicles(dealership.getVehiclesByColor(getStringInput("Color",false)));
     }
 
     public void processGetByMileageRequest(){
-        String input;
-        int min = -1;
-        int max = -1;
-
-        while (min < 0) {
-            System.out.print("Enter The Minimum Mileage: ");
-            input = scanner.nextLine();
-            try {
-                min = Integer.parseInt(input);
-                if (min < 0) {
-                    System.out.println("Minimum mileage must be non-negative. Please try again.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid number.");
-            }
-        }
-
-        while (max <= 0) {
-            System.out.print("Enter The Maximum Mileage: ");
-            input = scanner.nextLine();
-            try {
-                max = Integer.parseInt(input);
-                if (max < 0 || max < min) {
-                    System.out.println("Maximum mileage must be greater than the minimum price. Please try again.");
-                    max = -1;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid number.");
-            }
-        }
+        Integer min = getIntegerInput(0,null, "Minimum Mileage",true);
+        Integer max = getIntegerInput((min != null ? min : 0),null,"Maximum Mileage",true);
 
         displayVehicles(dealership.getVehiclesByMileage(min, max));
     }
 
     public void processGetByVehicleTypeRequest(){
-        String input = "";
-
-        while (input.isBlank()) {
-            System.out.print("Enter The Desired Type: ");
-
-            try {
-                input = scanner.nextLine().trim();
-            } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a valid type.");
-            }
-        }
-
-        displayVehicles(dealership.getVehiclesByType(input));
+        displayVehicles(dealership.getVehiclesByType(getStringInput("Type",false)));
     }
 
     public void processGetAllVehiclesRequest(){
@@ -207,7 +78,26 @@ public class UserInterface {
     }
 
     public void processAddVehicleRequest(){
+        try{
+            String make = getStringInput("Make",false);
+            String model = getStringInput("Model",false);
+            String type = getStringInput("Type",false);
+            String color = getStringInput("Color",false);
+            Integer vin = getIntegerInput(0,null,"Vin",false);
+            Integer year = getIntegerInput(1900,getMaxYear(),"Year",false);
+            Integer odometer = getIntegerInput(0,null,"Mileage",false);
+            Double price = getDoubleInput(0.0,"Price",false);
 
+            if(vin != null && year != null && odometer != null && price != null){
+                Vehicle vehicle = new Vehicle(vin,year,make,model,type,color,odometer,price);
+                dealership.addVehicle(vehicle);
+                initiateSave();
+            }else{
+                throw new RuntimeException();
+            }
+        }catch (Exception e){
+            System.out.println("Error processing input");
+        }
     }
 
     public void processRemoveVehicleRequest(){
@@ -237,5 +127,68 @@ public class UserInterface {
         for(Vehicle vehicle : vehicles){
             System.out.println(vehicle);
         }
+    }
+
+    private void initiateSave(){
+        DealershipFileManager manager = new DealershipFileManager();
+        manager.saveDealership(dealership);
+    }
+
+    private int getMaxYear(){
+        LocalDateTime now = LocalDateTime.now();
+        return now.getYear() + 1;
+    }
+
+    private String getStringInput(String displayType, boolean isNullable){
+        String input = "";
+
+        while (input.isBlank()) {
+            System.out.printf("Enter The Desired %s"+(isNullable ? " (or press enter to leave blank)":"")+": ",displayType);
+            try {
+                input = scanner.nextLine().trim();
+                if(isNullable)return input;
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a valid type.");
+            }
+        }
+        return input;
+    }
+
+    private Integer getIntegerInput(Integer min, Integer max, String verbiage, boolean isNullable){
+        String input;
+        int targetInt = -1;
+        while(targetInt < 0 || (min != null && targetInt < min) || (max != null && targetInt > max)){
+            System.out.printf("Enter The %s"+(isNullable ? " (or press 'enter' to leave blank)" : "")+": ",verbiage);
+            input = scanner.nextLine();
+            if(isNullable&&input.isBlank())return null;
+            try {
+                targetInt = Integer.parseInt(input);
+                if (targetInt < 0) System.out.println("Number must be non-negative. Please try again.");
+                if(max != null && targetInt > max) System.out.printf("Number cannot be larger than %s. Please try again.%n",max);
+                if(min != null && targetInt < min) System.out.printf("Number cannot be smaller than %s. Please try again.%n",min);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
+        return targetInt;
+    }
+
+    private Double getDoubleInput(Double min, String verbiage, boolean isNullable){
+        String input;
+        double targetDouble = -1.0;
+        while(targetDouble < 0 || (min != null && (targetDouble < min))){
+            System.out.printf("Enter The %s"+(isNullable ? " (or press 'enter' to leave blank)" : "")+": ",verbiage);
+            input = scanner.nextLine();
+            if(isNullable&&input.isBlank())return null;
+            try {
+                targetDouble = Double.parseDouble(input);
+                if (targetDouble < 0){
+                    System.out.println("Number must be non-negative. Please try again.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
+        return targetDouble;
     }
 }

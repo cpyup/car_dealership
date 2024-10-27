@@ -16,11 +16,11 @@ public class Dealership {
         this.inventory = new ArrayList<>();
     }
 
-    public List<Vehicle> getVehiclesByPrice(double min, double max){
+    public List<Vehicle> getVehiclesByPrice(Double min, Double max){
         List<Vehicle> vehicles = new ArrayList<>();
 
         for(Vehicle vehicle : inventory){
-            if(vehicle.getPrice() <= max && vehicle.getPrice() >= min){
+            if((min == null || vehicle.getPrice() >= min) && (max == null || vehicle.getPrice() <= max)){
                 vehicles.add(vehicle);
             }
         }
@@ -39,11 +39,11 @@ public class Dealership {
         return vehicles;
     }
 
-    public List<Vehicle> getVehiclesByYear(int min, int max){
+    public List<Vehicle> getVehiclesByYear(Integer min, Integer max){
         List<Vehicle> vehicles = new ArrayList<>();
 
         for(Vehicle vehicle : inventory){
-            if(vehicle.getYear() <= max && vehicle.getYear() >= min){
+            if((max == null || vehicle.getYear() <= max) && (min == null || vehicle.getYear() >= min)){
                 vehicles.add(vehicle);
             }
         }
@@ -61,11 +61,11 @@ public class Dealership {
         return vehicles;
     }
 
-    public List<Vehicle> getVehiclesByMileage(int min, int max){
+    public List<Vehicle> getVehiclesByMileage(Integer min, Integer max){
         List<Vehicle> vehicles = new ArrayList<>();
 
         for(Vehicle vehicle : inventory){
-            if(vehicle.getOdometer() <= max && vehicle.getOdometer() >= min){
+            if((max == null || vehicle.getOdometer() <= max) && (min == null || vehicle.getOdometer() >= min)){
                 vehicles.add(vehicle);
             }
         }

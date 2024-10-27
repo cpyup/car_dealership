@@ -163,7 +163,19 @@ public class UserInterface {
     }
 
     public void processGetByVehicleTypeRequest(){
+        String input = "";
 
+        while (input.isBlank()) {
+            System.out.print("Enter The Desired Type: ");
+
+            try {
+                input = scanner.nextLine().trim();
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please enter a valid type.");
+            }
+        }
+
+        displayVehicles(dealership.getVehiclesByType(input));
     }
 
     public void processGetAllVehiclesRequest(){

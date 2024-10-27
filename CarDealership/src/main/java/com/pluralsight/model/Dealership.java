@@ -92,6 +92,18 @@ public class Dealership {
     }
 
     public void removeVehicle(Vehicle vehicle){
-        inventory.remove(inventory.indexOf(vehicle));
+        inventory.remove(vehicle);
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder output = new StringBuilder();
+        output.append(String.format("%s|%s|%s",name,address,phone));
+        for(Vehicle vehicle : inventory){
+            output.append(String.format("%n%d|%d|%s|%s|%s|%s|%d|%.2f",
+                    vehicle.getVin(),vehicle.getYear(),vehicle.getMake(),vehicle.getModel(),vehicle.getVehicleType(),
+                    vehicle.getColor(),vehicle.getOdometer(),vehicle.getPrice()));
+        }
+        return output.toString();
     }
 }

@@ -3,9 +3,7 @@ package com.pluralsight.persistence;
 import com.pluralsight.model.Dealership;
 import com.pluralsight.model.Vehicle;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class DealershipFileManager {
     private static final String FILE_PATH = "dealership.csv";
@@ -16,13 +14,15 @@ public class DealershipFileManager {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] values = line.split("\\|");
-                if(dealership == null && values.length == 3){  // Dealer info
+
+                // Collecting dealer information
+                if(dealership == null && values.length == 3){
                     dealership = new Dealership(values[0].trim(),values[1].trim(),values[2].trim());
                 }
+                // Collecting inventory information
                 if(dealership!=null && values.length == 8){
                     dealership.addVehicle(parseValues(values));
                 }
-
             }
             return dealership;
         }catch(IOException e){
@@ -33,7 +33,11 @@ public class DealershipFileManager {
     }
 
     public void saveDealership(Dealership dealership){
-
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))){
+            writer.write(dealership.toString());
+        }catch(IOException e){
+            System.out.println("Error Writing Data File");
+        }
     }
 
     private Vehicle parseValues(String[] values){

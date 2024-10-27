@@ -129,7 +129,7 @@ public class UserInterface {
         }
     }
 
-    private void initiateSave(){
+    private void initiateSave(){ // TODO: User confirmation before writing to file
         DealershipFileManager manager = new DealershipFileManager();
         manager.saveDealership(dealership);
     }

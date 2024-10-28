@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dealership {
-    private String name;
-    private String address;
-    private String phone;
-    private List<Vehicle> inventory;
+    private final String name;
+    private final String address;
+    private final String phone;
+    private final List<Vehicle> inventory;
 
     public Dealership(String name, String address, String phone) {
         this.name = name;
@@ -20,7 +20,7 @@ public class Dealership {
         List<Vehicle> vehicles = new ArrayList<>();
 
         for(Vehicle vehicle : inventory){
-            if((min == null || vehicle.getPrice() >= min) && (max == null || vehicle.getPrice() <= max)){
+            if((min == null || vehicle.price() >= min) && (max == null || vehicle.price() <= max)){
                 vehicles.add(vehicle);
             }
         }
@@ -31,8 +31,8 @@ public class Dealership {
         List<Vehicle> vehicles = new ArrayList<>();
 
         for(Vehicle vehicle : inventory){
-            if((vehicle.getMake().equalsIgnoreCase(make) && vehicle.getModel().equalsIgnoreCase(model)) ||
-                    (vehicle.getMake().equalsIgnoreCase(make) && model.equals(""))){
+            if((vehicle.make().equalsIgnoreCase(make) && vehicle.model().equalsIgnoreCase(model)) ||
+                    (vehicle.make().equalsIgnoreCase(make) && model.equals(""))){
                 vehicles.add(vehicle);
             }
         }
@@ -43,7 +43,7 @@ public class Dealership {
         List<Vehicle> vehicles = new ArrayList<>();
 
         for(Vehicle vehicle : inventory){
-            if((max == null || vehicle.getYear() <= max) && (min == null || vehicle.getYear() >= min)){
+            if((max == null || vehicle.year() <= max) && (min == null || vehicle.year() >= min)){
                 vehicles.add(vehicle);
             }
         }
@@ -54,7 +54,7 @@ public class Dealership {
         List<Vehicle> vehicles = new ArrayList<>();
 
         for(Vehicle vehicle : inventory){
-            if(vehicle.getColor().equalsIgnoreCase(color)){
+            if(vehicle.color().equalsIgnoreCase(color)){
                 vehicles.add(vehicle);
             }
         }
@@ -65,7 +65,7 @@ public class Dealership {
         List<Vehicle> vehicles = new ArrayList<>();
 
         for(Vehicle vehicle : inventory){
-            if((max == null || vehicle.getOdometer() <= max) && (min == null || vehicle.getOdometer() >= min)){
+            if((max == null || vehicle.odometer() <= max) && (min == null || vehicle.odometer() >= min)){
                 vehicles.add(vehicle);
             }
         }
@@ -76,7 +76,7 @@ public class Dealership {
         List<Vehicle> vehicles = new ArrayList<>();
 
         for(Vehicle vehicle : inventory){
-            if(vehicle.getVehicleType().equalsIgnoreCase(type)){
+            if(vehicle.vehicleType().equalsIgnoreCase(type)){
                 vehicles.add(vehicle);
             }
         }
@@ -89,7 +89,7 @@ public class Dealership {
 
     public List<Vehicle> getVehiclesByVin(int vin){
         return inventory.stream().
-                filter(vehicle -> vehicle.getVin()==vin).toList();
+                filter(vehicle -> vehicle.vin()==vin).toList();
     }
 
     public void addVehicle(Vehicle vehicle){
@@ -106,8 +106,8 @@ public class Dealership {
         output.append(String.format("%s|%s|%s",name,address,phone));
         for(Vehicle vehicle : inventory){
             output.append(String.format("%n%d|%d|%s|%s|%s|%s|%d|%.2f",
-                    vehicle.getVin(),vehicle.getYear(),vehicle.getMake(),vehicle.getModel(),vehicle.getVehicleType(),
-                    vehicle.getColor(),vehicle.getOdometer(),vehicle.getPrice()));
+                    vehicle.vin(),vehicle.year(),vehicle.make(),vehicle.model(),vehicle.vehicleType(),
+                    vehicle.color(),vehicle.odometer(),vehicle.price()));
         }
         return output.toString();
     }

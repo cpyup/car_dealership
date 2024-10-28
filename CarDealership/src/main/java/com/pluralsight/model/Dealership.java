@@ -51,14 +51,7 @@ public class Dealership {
     }
 
     public List<Vehicle> getVehiclesByColor(String color){
-        List<Vehicle> vehicles = new ArrayList<>();
-
-        for(Vehicle vehicle : inventory){
-            if(vehicle.color().equalsIgnoreCase(color)){
-                vehicles.add(vehicle);
-            }
-        }
-        return vehicles;
+        return inventory.stream().filter(vehicle -> vehicle.vehicleType().equalsIgnoreCase(color)).toList();
     }
 
     public List<Vehicle> getVehiclesByMileage(Integer min, Integer max){
@@ -73,14 +66,7 @@ public class Dealership {
     }
 
     public List<Vehicle> getVehiclesByType(String type){
-        List<Vehicle> vehicles = new ArrayList<>();
-
-        for(Vehicle vehicle : inventory){
-            if(vehicle.vehicleType().equalsIgnoreCase(type)){
-                vehicles.add(vehicle);
-            }
-        }
-        return vehicles;
+        return inventory.stream().filter(vehicle -> vehicle.vehicleType().equalsIgnoreCase(type)).toList();
     }
 
     public List<Vehicle> getAllVehicles(){
@@ -88,8 +74,7 @@ public class Dealership {
     }
 
     public List<Vehicle> getVehiclesByVin(int vin){
-        return inventory.stream().
-                filter(vehicle -> vehicle.vin()==vin).toList();
+        return inventory.stream().filter(vehicle -> vehicle.vin()==vin).toList();
     }
 
     public void addVehicle(Vehicle vehicle){

@@ -90,8 +90,10 @@ public class UserInterface {
 
             if(vin != null && year != null && odometer != null && price != null){
                 Vehicle vehicle = new Vehicle(vin,year,make,model,type,color,odometer,price);
-                dealership.addVehicle(vehicle);
-                initiateSave();
+                if(confirmUserAction("Addition")){
+                    dealership.addVehicle(vehicle);
+                    initiateSave();
+                }
             }else{
                 throw new RuntimeException();
             }
@@ -104,10 +106,12 @@ public class UserInterface {
         Integer vin = getIntegerInput(0,null,"Vin To Remove",false);
         if(vin != null){
             List<Vehicle> vehicles = dealership.getVehiclesByVin(vin);
-            //TODO: Confirm removal
             displayVehicles(vehicles);
-            vehicles.forEach(vehicle -> dealership.removeVehicle(vehicle));
-            initiateSave();
+
+            if(confirmUserAction("Deletion")){
+                vehicles.forEach(vehicle -> dealership.removeVehicle(vehicle));
+                initiateSave();
+            }
         }
     }
 
@@ -136,9 +140,10 @@ public class UserInterface {
         }
     }
 
-    private void initiateSave(){ // TODO: User confirmation before writing to file
+    private void initiateSave(){
         DealershipFileManager manager = new DealershipFileManager();
         manager.saveDealership(dealership);
+        System.out.println("Data Successfully Updated.");
     }
 
     private int getMaxYear(){
@@ -197,6 +202,12 @@ public class UserInterface {
             }
         }
         return targetDouble;
+    }
+
+    private boolean confirmUserAction(String verbiage){
+        System.out.print("Enter 'X' To Cancel Or Press 'Enter' To Confirm "+verbiage + ":");
+        String input = scanner.nextLine();
+        return !input.equalsIgnoreCase("X");
     }
 
 

@@ -5,9 +5,26 @@ import com.pluralsight.model.Vehicle;
 
 import java.io.*;
 
+/**
+ * The {@code DealershipFileManager} class provides methods to manage
+ * the persistence of {@code Dealership} and its associated {@code Vehicle}
+ * data using a CSV file format.
+ * <p>
+ * This class supports loading a dealership from a CSV file and saving
+ * the dealership back to the file.
+ * </p>
+ */
 public class DealershipFileManager {
     private static final String FILE_PATH = "dealership.csv";
 
+    /**
+     * Retrieves a {@code Dealership} object by reading from the
+     * predefined CSV file.
+     *
+     * @return the {@code Dealership} object populated with data from the
+     *         file, or {@code null} if an error occurs during file
+     *         reading.
+     */
     public Dealership getDealership(){
         try(BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))){
             Dealership dealership = null;
@@ -32,6 +49,12 @@ public class DealershipFileManager {
 
     }
 
+    /**
+     * Saves the given {@code Dealership} object to the predefined
+     * CSV file.
+     *
+     * @param dealership the {@code Dealership} object to be saved.
+     */
     public void saveDealership(Dealership dealership){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))){
             writer.write(dealership.toString());
@@ -40,6 +63,13 @@ public class DealershipFileManager {
         }
     }
 
+    /**
+     * Parses an array of string values into a {@code Vehicle} object.
+     *
+     * @param values the array of string values representing vehicle details.
+     * @return a {@code Vehicle} object created from the parsed values,
+     *         or {@code null} if a parsing error occurs.
+     */
     private Vehicle parseValues(String[] values){
         try{
             int vin = Integer.parseInt(values[0]);

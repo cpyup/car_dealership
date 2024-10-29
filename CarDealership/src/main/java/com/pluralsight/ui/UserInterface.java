@@ -8,10 +8,25 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The {@code UserInterface} class provides a command-line interface
+ * for interacting with a car dealership. It allows users to perform
+ * various operations such as searching for vehicles, adding, and
+ * removing vehicles from the dealership's inventory.
+ * <p>
+ * This class manages user input and output, handles data retrieval
+ * from the {@code Dealership} model, and saves changes to the
+ * dealership's data.
+ * </p>
+ */
 public class UserInterface {
     private Dealership dealership;
     private static final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Displays the main menu and processes user input until the user
+     * decides to quit the application.
+     */
     public void display(){
         init();
         String input;
@@ -38,12 +53,20 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Processes user input to retrieve vehicles based on price range
+     * and displays the matching vehicles.
+     */
     public void processGetByPriceRequest() {
         Double min = getDoubleInput(0.0,"Minimum Price",true);
         Double max = getDoubleInput((min != null ? min : 0.0),"Maximum Price",true);
         displayVehicles(dealership.getVehiclesByPrice(min, max));
     }
 
+    /**
+     * Processes user input to retrieve vehicles based on make and
+     * model and displays the matching vehicles.
+     */
     public void processGetByMakeModelRequest(){
         String make = getStringInput("Make",false);
         String model = getStringInput("Model",true);
@@ -51,6 +74,10 @@ public class UserInterface {
         displayVehicles(dealership.getVehiclesByMakeModel(make,model));
     }
 
+    /**
+     * Processes user input to retrieve vehicles based on year range
+     * and displays the matching vehicles.
+     */
     public void processGetByYearRequest(){
         Integer min = getIntegerInput(1900, getMaxYear(),"Minimum Year",true);
         Integer max = getIntegerInput(min,getMaxYear(),"Maximum Year",true);
@@ -58,10 +85,18 @@ public class UserInterface {
         displayVehicles(dealership.getVehiclesByYear(min, max));
     }
 
+    /**
+     * Processes user input to retrieve vehicles based on color and
+     * displays the matching vehicles.
+     */
     public void processGetByColorRequest(){
         displayVehicles(dealership.getVehiclesByColor(getStringInput("Color",false)));
     }
 
+    /**
+     * Processes user input to retrieve vehicles based on mileage
+     * range and displays the matching vehicles.
+     */
     public void processGetByMileageRequest(){
         Integer min = getIntegerInput(0,null, "Minimum Mileage",true);
         Integer max = getIntegerInput((min != null ? min : 0),null,"Maximum Mileage",true);
@@ -69,14 +104,25 @@ public class UserInterface {
         displayVehicles(dealership.getVehiclesByMileage(min, max));
     }
 
+    /**
+     * Processes user input to retrieve vehicles based on type and
+     * displays the matching vehicles.
+     */
     public void processGetByVehicleTypeRequest(){
         displayVehicles(dealership.getVehiclesByType(getStringInput("Type",false)));
     }
 
+    /**
+     * Displays all vehicles in the dealership's inventory.
+     */
     public void processGetAllVehiclesRequest(){
         displayVehicles(dealership.getAllVehicles());
     }
 
+    /**
+     * Processes user input to add a new vehicle to the dealership's
+     * inventory and initiates saving the updated data.
+     */
     public void processAddVehicleRequest(){
         try{
             String make = getStringInput("Make",false);
@@ -102,6 +148,10 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Processes user input to remove a vehicle from the dealership's
+     * inventory based on VIN and initiates saving the updated data.
+     */
     public void processRemoveVehicleRequest(){
         Integer vin = getIntegerInput(0,null,"Vin To Remove",false);
         if(vin != null){
@@ -115,11 +165,17 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Initializes the dealership by loading data from the file.
+     */
     private void init(){
         DealershipFileManager manager = new DealershipFileManager();
         dealership = manager.getDealership();
     }
 
+    /**
+     * Outputs the main menu options to the console.
+     */
     private void outputMenu(){
         System.out.println("Dealership Menu Options:");
         System.out.println("\t1 - Search By Price");
@@ -134,23 +190,43 @@ public class UserInterface {
         System.out.println("\t99 - Quit");
     }
 
+    /**
+     * Displays a list of vehicles to the console.
+     *
+     * @param vehicles the list of vehicles to display
+     */
     private void displayVehicles(List<Vehicle> vehicles){
         for(Vehicle vehicle : vehicles){
             System.out.println(vehicle);
         }
     }
 
+    /**
+     * Saves the current state of the dealership to the file.
+     */
     private void initiateSave(){
         DealershipFileManager manager = new DealershipFileManager();
         manager.saveDealership(dealership);
         System.out.println("Data Successfully Updated.");
     }
 
+    /**
+     * Retrieves the maximum year based on the current year.
+     *
+     * @return the maximum year (current year + 1)
+     */
     private int getMaxYear(){
         LocalDateTime now = LocalDateTime.now();
         return now.getYear() + 1;
     }
 
+    /**
+     * Prompts the user for a string input and handles validation.
+     *
+     * @param displayType the type of input to be displayed to the user
+     * @param isNullable  indicates if the input can be left blank
+     * @return the validated string input
+     */
     private String getStringInput(String displayType, boolean isNullable){
         String input = "";
 
@@ -166,6 +242,15 @@ public class UserInterface {
         return input;
     }
 
+    /**
+     * Prompts the user for an integer input and handles validation.
+     *
+     * @param min       the minimum allowable value or {@code null}
+     * @param max       the maximum allowable value or {@code null}
+     * @param verbiage  a description of the input
+     * @param isNullable indicates if the input can be left blank
+     * @return the validated integer input
+     */
     private Integer getIntegerInput(Integer min, Integer max, String verbiage, boolean isNullable){
         String input;
         int targetInt = -1;
@@ -185,6 +270,14 @@ public class UserInterface {
         return targetInt;
     }
 
+    /**
+     * Prompts the user for a double input and handles validation.
+     *
+     * @param min       the minimum allowable value or {@code null}
+     * @param verbiage  a description of the input
+     * @param isNullable indicates if the input can be left blank
+     * @return the validated double input
+     */
     private Double getDoubleInput(Double min, String verbiage, boolean isNullable){
         String input;
         double targetDouble = -1.0;
@@ -204,11 +297,16 @@ public class UserInterface {
         return targetDouble;
     }
 
+    /**
+     * Prompts the user to confirm an action.
+     *
+     * @param verbiage a description of the action to confirm
+     * @return {@code true} if the user confirms; {@code false} if the user cancels
+     */
     private boolean confirmUserAction(String verbiage){
         System.out.print("Enter 'X' To Cancel Or Press 'Enter' To Confirm "+verbiage + ":");
         String input = scanner.nextLine();
         return !input.equalsIgnoreCase("X");
     }
-
 
 }

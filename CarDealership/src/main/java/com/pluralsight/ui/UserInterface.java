@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.pluralsight.ui.ColorCodes.*;
+
 /**
  * The {@code UserInterface} class provides a command-line interface
  * for interacting with a car dealership. It allows users to perform
@@ -197,12 +199,21 @@ public class UserInterface {
      */
     private void displayVehicles(List<Vehicle> vehicles){
         if(!vehicles.isEmpty()){
-            StringBuilder builder = new StringBuilder(dataHeader());
-            vehicles.forEach(vehicle -> builder.append(vehicle.toString()).append("\n"));
-            System.out.println(builder);
+            System.out.println(inventoryAsTable(vehicles));
         }else{
             System.out.println("No results found.");
         }
+    }
+
+    private String inventoryAsTable(List<Vehicle> vehicles){
+        StringBuilder builder = new StringBuilder(dataHeader());
+        for (int i = 0; i < vehicles.size(); i++) {
+            Vehicle vehicle = vehicles.get(i);
+            builder.append(rowFormat(vehicle.toString(),(i % 2 == 0 ? TABLE_COLOR_0  : TABLE_COLOR_1))).
+                    append(RESET).append("\n");
+        }
+        builder.append(String.format(HEADER_COLOR+"%-94s"+RESET," "));
+        return builder.toString();
     }
 
     /**
@@ -313,9 +324,17 @@ public class UserInterface {
         return !input.equalsIgnoreCase("X");
     }
 
+    /**
+     * Formats a string representing the header for the vehicle display output.
+     * @return table header string
+     */
     private String dataHeader(){
-        return String.format("%n %-4s %5s %6s %10s %10s %10s %10s%12s%n",
+        return String.format("%n"+BORDER_STRING+HEADER_COLOR+"%6s  %6s %8s %12s %12s %12s %14s %12s  "+BORDER_STRING+RESET+"%n",
                 "Vin","Year","Make","Model","Type","Color","Miles","Price");
+    }
+
+    private String rowFormat(String vehicleString, String color){
+        return BORDER_STRING+color+vehicleString.replace("-",color+COLUMN_SEPARATOR+color)+BORDER_STRING;
     }
 
 }

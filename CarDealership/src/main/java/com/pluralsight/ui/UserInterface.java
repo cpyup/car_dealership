@@ -206,6 +206,16 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Constructs a formatted string representation of a list of vehicles as a table.
+     * This method initializes a StringBuilder with a header and then iterates
+     * through a list of Vehicle objects. It formats each vehicle using the
+     * {@link #rowFormat(String, String)} method, alternating colors for
+     * even and odd indexed vehicles. Finally, it appends a footer to the table.
+     *
+     * @param vehicles A list of Vehicle objects to be included in the table.
+     * @return        A string representation of the vehicle inventory formatted as a table.
+     */
     private String inventoryAsTable(List<Vehicle> vehicles){
         StringBuilder builder = new StringBuilder(dataHeader());
         for (int i = 0; i < vehicles.size(); i++) {
@@ -325,6 +335,11 @@ public class UserInterface {
         return !input.equalsIgnoreCase("X");
     }
 
+    /**
+     * Prompts the user to press 'Enter' to continue.
+     * This method waits for the user to input a line, effectively pausing
+     * the program until the user acknowledges by pressing 'Enter'.
+     */
     private void confirmContinue(){
         System.out.print("Press 'Enter' To Continue");
         scanner.nextLine();
@@ -339,6 +354,17 @@ public class UserInterface {
                 "Vin","Year","Make","Model","Type","Color","Miles","Price");
     }
 
+    /**
+     * Formats a vehicle string with a specified color and borders.
+     * This method takes a vehicle string and a color, replaces the
+     * hyphens in the vehicle string with the specified color and a column
+     * separator, and adds a border to the formatted string.
+     *
+     * @param vehicleString The string representation of the vehicle,
+     *                      containing hyphens to be replaced.
+     * @param color         The color to format the vehicle string.
+     * @return             A formatted string that includes the color and borders.
+     */
     private String rowFormat(String vehicleString, String color){
         return BORDER_STRING+color+vehicleString.replace("-",color+COLUMN_SEPARATOR+color)+BORDER_STRING;
     }

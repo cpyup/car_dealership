@@ -1,6 +1,15 @@
 package com.pluralsight.ui;
 
 
+/**
+ * A utility class that contains ANSI color codes for console text formatting.
+ *
+ * This class provides static constants for various color codes used to
+ * format console output, including header colors, table row colors, and
+ * separator colors. The purpose of these codes is to enhance the visual
+ * presentation of console applications. The constructor is private to
+ * prevent instantiation of this utility class.
+ */
 public class ColorCodes {
     public static final String RESET = "\u001B[0m";
     public static final String HEADER_COLOR = "\033[0;30;100m";

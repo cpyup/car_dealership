@@ -41,14 +41,7 @@ public class Dealership {
      * @return a list of vehicles within the specified price range
      */
     public List<Vehicle> getVehiclesByPrice(Double min, Double max){
-        List<Vehicle> vehicles = new ArrayList<>();
-
-        for(Vehicle vehicle : inventory){
-            if((min == null || vehicle.price() >= min) && (max == null || vehicle.price() <= max)){
-                vehicles.add(vehicle);
-            }
-        }
-        return vehicles;
+        return inventory.stream().filter(vehicle -> (min == null || vehicle.price() >= min) && (max == null || vehicle.price() <= max)).toList();
     }
 
     /**
@@ -59,15 +52,8 @@ public class Dealership {
      * @return a list of vehicles that match the specified make and model
      */
     public List<Vehicle> getVehiclesByMakeModel(String make, String model){
-        List<Vehicle> vehicles = new ArrayList<>();
-
-        for(Vehicle vehicle : inventory){
-            if((vehicle.make().equalsIgnoreCase(make) && vehicle.model().equalsIgnoreCase(model)) ||
-                    (vehicle.make().equalsIgnoreCase(make) && model.equals(""))){
-                vehicles.add(vehicle);
-            }
-        }
-        return vehicles;
+        return inventory.stream().filter(vehicle -> (vehicle.make().equalsIgnoreCase(make) && vehicle.model().equalsIgnoreCase(model)) ||
+                (vehicle.make().equalsIgnoreCase(make) && model.equals(""))).toList();
     }
 
     /**
@@ -78,14 +64,7 @@ public class Dealership {
      * @return a list of vehicles within the specified year range
      */
     public List<Vehicle> getVehiclesByYear(Integer min, Integer max){
-        List<Vehicle> vehicles = new ArrayList<>();
-
-        for(Vehicle vehicle : inventory){
-            if((max == null || vehicle.year() <= max) && (min == null || vehicle.year() >= min)){
-                vehicles.add(vehicle);
-            }
-        }
-        return vehicles;
+        return  inventory.stream().filter(vehicle -> (max == null || vehicle.year() <= max)&&(min == null || vehicle.year() >= min)).toList();
     }
 
     /**
@@ -95,7 +74,7 @@ public class Dealership {
      * @return a list of vehicles that match the specified color
      */
     public List<Vehicle> getVehiclesByColor(String color){
-        return inventory.stream().filter(vehicle -> vehicle.vehicleType().equalsIgnoreCase(color)).toList();
+        return inventory.stream().filter(vehicle -> vehicle.color().equalsIgnoreCase(color)).toList();
     }
 
     /**
@@ -106,14 +85,7 @@ public class Dealership {
      * @return a list of vehicles within the specified mileage range
      */
     public List<Vehicle> getVehiclesByMileage(Integer min, Integer max){
-        List<Vehicle> vehicles = new ArrayList<>();
-
-        for(Vehicle vehicle : inventory){
-            if((max == null || vehicle.odometer() <= max) && (min == null || vehicle.odometer() >= min)){
-                vehicles.add(vehicle);
-            }
-        }
-        return vehicles;
+        return inventory.stream().filter(vehicle ->(max == null || vehicle.odometer() <= max) && (min == null || vehicle.odometer() >= min)).toList();
     }
 
     /**
@@ -127,15 +99,6 @@ public class Dealership {
     }
 
     /**
-     * Retrieves a list of all vehicles in the dealership's inventory.
-     *
-     * @return a list of all vehicles
-     */
-    public List<Vehicle> getAllVehicles(){
-        return inventory;
-    }
-
-    /**
      * Retrieves a list of vehicles that match the specified VIN.
      *
      * @param vin the VIN of the vehicle
@@ -143,6 +106,15 @@ public class Dealership {
      */
     public List<Vehicle> getVehiclesByVin(int vin){
         return inventory.stream().filter(vehicle -> vehicle.vin()==vin).toList();
+    }
+
+    /**
+     * Retrieves a list of all vehicles in the dealership's inventory.
+     *
+     * @return a list of all vehicles
+     */
+    public List<Vehicle> getAllVehicles(){
+        return inventory;
     }
 
     /**

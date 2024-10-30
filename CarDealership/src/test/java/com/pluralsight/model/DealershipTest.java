@@ -10,6 +10,21 @@ import static org.junit.jupiter.api.Assertions.*;
 class DealershipTest {
 
     @Test
+    public void dealership_GetAllVehiclesValid_Success(){
+        Dealership dealership = new Dealership("Test Dealer","123 Fake Street","8675309");
+        dealership.addVehicle(new Vehicle(8675309,2015,"Chevy","Cruze","Sedan","Grey",10000,5000));
+        List<Vehicle> vehicles = new ArrayList<>();
+        vehicles.add(new Vehicle(8675309,2015,"Chevy","Cruze","Sedan","Grey",10000,5000));
+        assertEquals(vehicles,dealership.getAllVehicles());
+    }
+
+    @Test
+    public void dealership_GetAllVehiclesEmptyDealership_IsEmptyTrue(){
+        Dealership dealership = new Dealership("Test Dealer","123 Fake Street","8675309");
+        assertTrue(dealership.getAllVehicles().isEmpty());
+    }
+
+    @Test
     public void dealership_AddVehicleToInventory_Success(){
         Vehicle vehicle = new Vehicle(8675309,2015,"Chevy","Cruze","Sedan","Grey",10000,5000);
         Dealership dealership = new Dealership("Test Dealer","123 Fake Street","8675309");

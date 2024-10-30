@@ -65,7 +65,7 @@ Follow these steps to get your application running within IntelliJ IDEA:
 
 ### Error Handling
 
-[TODO]
+![Error Examples](https://github.com/cpyup/car_dealership/blob/main/screenshots/errors.png?raw=true)
 
 ## Project Highlights
 
@@ -79,6 +79,45 @@ Follow these steps to get your application running within IntelliJ IDEA:
 
 ![Min As Null](https://github.com/cpyup/car_dealership/blob/main/screenshots/min_null_max.png?raw=true)
 
+>This change was made very simple due to the way that I had structured my input collection - implementing a ternary operator on the output from the get method and another when calling the get for the max value.
+
+```java
+public void processGetByPriceRequest() {
+        Double min = getDoubleInput(0.0,"Minimum Price",true);
+        Double max = getDoubleInput((min != null ? min : 0.0),"Maximum Price",(min != null));
+        displayVehicles(dealership.getVehiclesByPrice(min, max));
+    }
+
+
+private Double getDoubleInput(Double min, String verbiage, boolean isNullable){
+        String input;
+        double targetDouble = -1.0;
+        // Looping until a valid number is entered (factoring minimum value param, if set)
+        while(targetDouble < 0 || (min != null && (targetDouble < min))){
+            System.out.printf("Enter The %s"+(isNullable ? " (or press 'enter' to leave blank)" : "")+": ",verbiage);
+            input = scanner.nextLine();
+            // Return on blank input for nullable values
+            if(isNullable&&input.isBlank())return null;
+            // Parse the value from the input string/handle input error
+            try {
+                targetDouble = Double.parseDouble(input);
+                if (targetDouble < 0){
+                    System.out.println("Number must be non-negative. Please try again.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
+        return targetDouble;
+    }
+```
+
+>Outside of the input handling, I implemented a *slightly* improved version of my table output (featured in the last capstone). This is the first project that will actually be submitted with *full* and *up-to-date Javadoc*, so I am happy about that. I was also able to implement more test cases than I have previously.
+
 ## Future Work
 
 - Implement Sales and Leasing
+
+>As the purpose of this project was to follow the given class diagrams, I did not want to do too much to stray from that. Every additional implementation was made as a private helper method, essentially only serving to declutter the primary functionality (with the exception of the ColorCodes static class - *being that it is nothing but a collection of formatting strings used by the UI, I felt comfortable with its inclusion keeping in alignment with the intent of the exercise*). 
+
+>With that in mind *(and the known potential for future projects using this as a base)*, I did not put as much *personality* into this one as I have previously. Hopefully at some point down the line, I will be allotted an opportunity for some more individuality with this one.

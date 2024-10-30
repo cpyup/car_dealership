@@ -2,7 +2,7 @@
 
 ## Project Summary
 
-This CLI application is designed to be used as an inventory management system for a dealership, allowing salesman to easily search the current vehicle inventory based on desired customer criteria with minimal input.
+This CLI application is designed to be used as an inventory management system for a dealership, allowing salesmen to easily search the current vehicle inventory based on desired customer criteria with minimal input.
 
 Inventory is stored in an external file, allowing for widespread usage of the application across the industry. Vehicles can also be added or removed directly from the command line interface, streamlining the inventory management experience.
 
@@ -55,20 +55,30 @@ Follow these steps to get your application running within IntelliJ IDEA:
 
 ## Display Examples
 
-[TODO]
+### Display All Vehicles
 
-## Future Work
+![All Vehicles](https://github.com/cpyup/car_dealership/blob/main/screenshots/display_all.png?raw=true)
+
+### Add Vehicle To Inventory
+
+![Adding Vehicle](https://github.com/cpyup/car_dealership/blob/main/screenshots/add_vehicle.png?raw=true)
+
+### Error Handling
 
 [TODO]
 
 ## Project Highlights
 
-[TODO]
+>My only real highlight for this one would be the way that I handled nullable inputs when getting data from the scanner. When searching for vehicles, most values can be left blank. In testing I found this to create a bit of a redundancy in display logic, as every method could display the full inventory if both values were blank. I decided to make it so that when searching for a range of values, only either the minimum OR maximum would be allowed a null input, not both.
 
-## Resources
+### Min And Max As Nullable Option
 
-[TODO]
+![Both As Nullable](https://github.com/cpyup/car_dealership/blob/main/screenshots/min_max.png?raw=true)
 
-## Thanks
+### Min As Null (Max No Longer Nullable)
 
-[TODO]
+![Min As Null](https://github.com/cpyup/car_dealership/blob/main/screenshots/min_null_max.png?raw=true)
+
+## Future Work
+
+- Implement Sales and Leasing

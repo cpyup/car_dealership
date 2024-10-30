@@ -280,10 +280,14 @@ public class UserInterface {
     private Integer getIntegerInput(Integer min, Integer max, String verbiage, boolean isNullable){
         String input;
         int targetInt = -1;
+        // Looping until a valid number is entered (factoring minimum value param, if set)
         while(targetInt < 0 || (min != null && targetInt < min) || (max != null && targetInt > max)){
+            // Display output for getting the value using the verbiage string to denote usage (e.g. "Minimum Year")
             System.out.printf("Enter The %s"+(isNullable ? " (or press 'enter' to leave blank)" : "")+": ",verbiage);
             input = scanner.nextLine();
+            // Return on blank input for nullable values
             if(isNullable&&input.isBlank())return null;
+            // Parse the value from the input string/handle input error
             try {
                 targetInt = Integer.parseInt(input);
                 if (targetInt < 0) System.out.println("Number must be non-negative. Please try again.");
@@ -307,10 +311,14 @@ public class UserInterface {
     private Double getDoubleInput(Double min, String verbiage, boolean isNullable){
         String input;
         double targetDouble = -1.0;
+        // Looping until a valid number is entered (factoring minimum value param, if set)
         while(targetDouble < 0 || (min != null && (targetDouble < min))){
+            // Display output for getting the value using the verbiage string to denote usage (e.g. "Minimum Year")
             System.out.printf("Enter The %s"+(isNullable ? " (or press 'enter' to leave blank)" : "")+": ",verbiage);
             input = scanner.nextLine();
+            // Return on blank input for nullable values
             if(isNullable&&input.isBlank())return null;
+            // Parse the value from the input string/handle input error
             try {
                 targetDouble = Double.parseDouble(input);
                 if (targetDouble < 0){

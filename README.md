@@ -112,7 +112,7 @@ private Double getDoubleInput(Double min, String verbiage, boolean isNullable){
     }
 ```
 
->Outside of the input handling, I implemented a *slightly* improved version of my table output (featured in the last capstone). This is the first project that will actually be submitted with *full* and *up-to-date Javadoc*, so I am happy about that. I was also able to implement more test cases than I have previously.
+>Outside of the input handling, I implemented a *slightly* improved version of my table output (featured in the last capstone). This is the first project that will actually be submitted with *full* and *up-to-date* Javadoc, so I am happy about that. I was also able to implement more test cases than I have previously.
 
 ## Future Work
 

@@ -9,7 +9,7 @@ import com.pluralsight.ui.UserInterface;
  * display method to present the user interface.
  */
 public class Program {
-    
+
     /**
      * The main method that runs the application.
      *

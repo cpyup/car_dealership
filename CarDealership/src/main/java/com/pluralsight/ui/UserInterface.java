@@ -70,8 +70,8 @@ public class UserInterface {
      * model and displays the matching vehicles.
      */
     public void processGetByMakeModelRequest(){
-        String make = getStringInput("Make",false);
-        String model = getStringInput("Model",true);
+        String make = getStringInput("Desired Make",false);
+        String model = getStringInput("Desired Model",true);
 
         displayVehicles(dealership.getVehiclesByMakeModel(make,model));
     }
@@ -92,7 +92,7 @@ public class UserInterface {
      * displays the matching vehicles.
      */
     public void processGetByColorRequest(){
-        displayVehicles(dealership.getVehiclesByColor(getStringInput("Color",false)));
+        displayVehicles(dealership.getVehiclesByColor(getStringInput("Desired Color",false)));
     }
 
     /**
@@ -111,7 +111,7 @@ public class UserInterface {
      * displays the matching vehicles.
      */
     public void processGetByVehicleTypeRequest(){
-        displayVehicles(dealership.getVehiclesByType(getStringInput("Type",false)));
+        displayVehicles(dealership.getVehiclesByType(getStringInput("Desired Type",false)));
     }
 
     /**
@@ -257,7 +257,7 @@ public class UserInterface {
         String input = "";
 
         while (input.isBlank()) {
-            System.out.printf("Enter The Desired %s"+(isNullable ? " (or press enter to leave blank)":"")+": ",displayType);
+            System.out.printf("Enter The %s"+(isNullable ? " (or press enter to leave blank)":"")+": ",displayType);
             try {
                 input = scanner.nextLine().trim();
                 if(isNullable)return input;

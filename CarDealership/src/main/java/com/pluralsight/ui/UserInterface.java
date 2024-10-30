@@ -81,8 +81,8 @@ public class UserInterface {
      * and displays the matching vehicles.
      */
     public void processGetByYearRequest(){
-        Integer min = getIntegerInput(1900, getMaxYear(),"Minimum Year",true);
-        Integer max = getIntegerInput(min,getMaxYear(),"Maximum Year",true);
+        Integer min = getIntegerInput(2000, getMaxYear(),"Minimum Year",true);
+        Integer max = getIntegerInput((min != null ? min : 2000),getMaxYear(),"Maximum Year",min!=null);
 
         displayVehicles(dealership.getVehiclesByYear(min, max));
     }
@@ -200,6 +200,7 @@ public class UserInterface {
     private void displayVehicles(List<Vehicle> vehicles){
         if(!vehicles.isEmpty()){
             System.out.println(inventoryAsTable(vehicles));
+            confirmContinue();
         }else{
             System.out.println("No results found.");
         }
@@ -322,6 +323,11 @@ public class UserInterface {
         System.out.print("Enter 'X' To Cancel Or Press 'Enter' To Confirm "+verbiage + ":");
         String input = scanner.nextLine();
         return !input.equalsIgnoreCase("X");
+    }
+
+    private void confirmContinue(){
+        System.out.print("Press 'Enter' To Continue");
+        scanner.nextLine();
     }
 
     /**

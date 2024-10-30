@@ -59,7 +59,7 @@ public class UserInterface {
      */
     public void processGetByPriceRequest() {
         Double min = getDoubleInput(0.0,"Minimum Price",true);
-        Double max = getDoubleInput((min != null ? min : 0.0),"Maximum Price",true);
+        Double max = getDoubleInput((min != null ? min : 0.0),"Maximum Price",(min != null));
         displayVehicles(dealership.getVehiclesByPrice(min, max));
     }
 
@@ -196,8 +196,12 @@ public class UserInterface {
      * @param vehicles the list of vehicles to display
      */
     private void displayVehicles(List<Vehicle> vehicles){
-        for(Vehicle vehicle : vehicles){
-            System.out.println(vehicle);
+        if(!vehicles.isEmpty()){
+            StringBuilder builder = new StringBuilder(dataHeader());
+            vehicles.forEach(vehicle -> builder.append(vehicle.toString()).append("\n"));
+            System.out.println(builder);
+        }else{
+            System.out.println("No results found.");
         }
     }
 
@@ -307,6 +311,11 @@ public class UserInterface {
         System.out.print("Enter 'X' To Cancel Or Press 'Enter' To Confirm "+verbiage + ":");
         String input = scanner.nextLine();
         return !input.equalsIgnoreCase("X");
+    }
+
+    private String dataHeader(){
+        return String.format("%n %-4s %5s %6s %10s %10s %10s %10s%12s%n",
+                "Vin","Year","Make","Model","Type","Color","Miles","Price");
     }
 
 }
